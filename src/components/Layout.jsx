@@ -32,8 +32,8 @@ export default function Layout({ children }) {
                     </motion.div>
                 </AnimatePresence>
             </main>
-            <footer className="relative z-10 bg-slate-950/50 backdrop-blur-xl border-t border-white/10 py-8 text-center text-gray-500 text-sm">
-                <p>© {new Date().getFullYear()} Blockchain Unpacked. Built for Education.</p>
+            <footer className="relative z-10 border-t border-brand-dark/10 py-8 text-center" style={{ color: 'black' }}>
+                <p className="font-bold text-sm">© {new Date().getFullYear()} Blockchain Unpacked. Built for Education.</p>
             </footer>
         </div>
     );
