@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-red: #B85042;
+  --color-brand-beige: #E7E8D1;
+  --color-brand-green: #A7BEAE;
+  --color-brand-dark: #2d3748;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-brand-beige);
+  color: var(--color-brand-dark);
+}
