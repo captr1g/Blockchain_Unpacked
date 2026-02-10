@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code, Info, X, BookOpen, Grid } from 'lucide-react';
+import { Code, Info, X, BookOpen, Grid, Zap } from 'lucide-react';
 
 export default function Solidity() {
     const [activeTab, setActiveTab] = useState('editor'); // 'editor' or 'dictionary'
@@ -156,12 +156,19 @@ export default function Solidity() {
                             <BookOpen className="w-4 h-4" />
                             <span>Solidity Dictionary</span>
                         </button>
+                        <button
+                            onClick={() => { setActiveTab('gas'); setSelectedTopic(null); }}
+                            className={`px-6 py-2 rounded-full font-semibold transition-all flex items-center space-x-2 ${activeTab === 'gas' ? 'bg-orange-500 text-white shadow-lg' : 'text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/10'}`}
+                        >
+                            <Zap className="w-4 h-4" />
+                            <span>Gas Optimizer</span>
+                        </button>
                     </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-[600px]">
 
-                    {/* Left Column: Code Editor OR Dictionary Grid */}
+                    {/* Left Column: Code Editor OR Dictionary Grid OR Gas Demo */}
                     <AnimatePresence mode="wait">
                         {activeTab === 'editor' ? (
                             <motion.div
@@ -200,7 +207,7 @@ export default function Solidity() {
                                     </div>
                                 </div>
                             </motion.div>
-                        ) : (
+                        ) : activeTab === 'dictionary' ? (
                             <motion.div
                                 key="dictionary"
                                 initial={{ opacity: 0, x: -20 }}
@@ -222,6 +229,8 @@ export default function Solidity() {
                                     ))}
                                 </div>
                             </motion.div>
+                        ) : (
+                            <GasOptimizationDemo />
                         )}
                     </AnimatePresence>
 
@@ -289,10 +298,15 @@ export default function Solidity() {
                                                 <Grid className="w-24 h-24 mb-4 opacity-20" />
                                                 <p className="text-xl">Select a term from the dictionary.</p>
                                             </>
-                                        ) : (
+                                        ) : activeTab === 'editor' ? (
                                             <>
                                                 <Code className="w-24 h-24 mb-4 opacity-20" />
                                                 <p className="text-xl">Select a line of code to learn more.</p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Zap className="w-24 h-24 mb-4 opacity-20" />
+                                                <p className="text-xl text-center">Select an optimization technique<br />to calculate gas savings.</p>
                                             </>
                                         )}
                                     </div>
@@ -334,5 +348,101 @@ export default function Solidity() {
                 </div>
             </div>
         </div>
+    );
+}
+
+function GasOptimizationDemo() {
+    const [scenario, setScenario] = useState('loop'); // 'loop' or 'packing'
+    const [optimization, setOptimization] = useState('bad'); // 'bad' or 'good'
+
+    const scenarios = {
+        loop: {
+            title: 'Storage vs Memory in Loops',
+            bad: {
+                code: `uint total = 0;
+for(uint i=0; i<numbers.length; i++) {
+   total += numbers[i]; // Reads from Storage every time!
+}`,
+                gas: 50000,
+                desc: 'Reading from storage (SLOAD) is expensive (100-2100 gas). Doing it in a loop is a disaster.'
+            },
+            good: {
+                code: `uint total = 0;
+uint[] memory nums = numbers; // Cache to Memory
+for(uint i=0; i<nums.length; i++) {
+   total += nums[i]; // Reads from Memory (Cheap!)
+}`,
+                gas: 5000,
+                desc: 'Reading from memory (MLOAD) is very cheap (3 gas). Cache storage variables before looping!'
+            }
+        },
+        packing: {
+            title: 'Variable Packing',
+            bad: {
+                code: `struct Player {
+    uint128 health;
+    uint256 id;
+    uint128 mana;
+}`,
+                gas: 60000,
+                desc: 'Solidity works in 256-bit slots. Here, `health` takes 1 slot, `id` takes 1 slot, `mana` takes 1 slot. Total: 3 slots.'
+            },
+            good: {
+                code: `struct Player {
+    uint128 health;
+    uint128 mana;
+    uint256 id; // Repositioned
+}`,
+                gas: 40000,
+                desc: 'Now `health` and `mana` (128+128=256) fit into ONE slot. `id` takes another. Total: 2 slots. 1 slot saved!'
+            }
+        }
+    };
+
+    const currentData = scenarios[scenario][optimization];
+
+    return (
+        <motion.div
+            key="gas-demo"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="bg-white/60 rounded-xl p-6 border border-brand-dark/10 overflow-y-auto backdrop-blur-sm h-full flex flex-col"
+        >
+            <h3 className="text-xl font-bold mb-6 flex items-center text-orange-600"><Zap className="mr-2" /> Gas Optimizer Visualizer</h3>
+
+            <div className="flex space-x-2 mb-6">
+                <button onClick={() => setScenario('loop')} className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${scenario === 'loop' ? 'bg-brand-dark text-white shadow-md' : 'bg-white border border-brand-dark/10 text-brand-dark/60'}`}> Loops & Storage</button>
+                <button onClick={() => setScenario('packing')} className={`flex-1 py-2 rounded-lg font-bold text-sm transition-all ${scenario === 'packing' ? 'bg-brand-dark text-white shadow-md' : 'bg-white border border-brand-dark/10 text-brand-dark/60'}`}> Variable Packing</button>
+            </div>
+
+            <div className="flex justify-center space-x-4 mb-6">
+                <button onClick={() => setOptimization('bad')} className={`px-4 py-2 rounded-full font-bold text-sm border transition-all ${optimization === 'bad' ? 'bg-red-100 text-red-600 border-red-300 ring-2 ring-red-200' : 'bg-transparent text-gray-400 border-gray-200'}`}> Inefficient Code </button>
+                <button onClick={() => setOptimization('good')} className={`px-4 py-2 rounded-full font-bold text-sm border transition-all ${optimization === 'good' ? 'bg-green-100 text-green-600 border-green-300 ring-2 ring-green-200' : 'bg-transparent text-gray-400 border-gray-200'}`}> Optimized Code </button>
+            </div>
+
+            <div className="relative mb-8 bg-gray-100 rounded-full h-8 overflow-hidden border border-gray-200">
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: optimization === 'bad' ? '90%' : '20%', backgroundColor: optimization === 'bad' ? '#EF4444' : '#10B981' }}
+                    transition={{ type: 'spring', stiffness: 100 }}
+                    className="h-full relative"
+                >
+                    <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-white text-xs font-bold">{currentData.gas} Gas</span>
+                </motion.div>
+            </div>
+
+            <div className="bg-brand-dark p-4 rounded-xl border border-brand-dark/10 font-mono text-sm shadow-inner mb-4">
+                <pre className="text-brand-beige whitespace-pre-wrap">{currentData.code}</pre>
+            </div>
+
+            <div className={`p-4 rounded-xl border text-sm font-medium ${optimization === 'bad' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-green-50 text-green-700 border-green-200'}`}>
+                <div className="flex items-start">
+                    <Info className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5" />
+                    {currentData.desc}
+                </div>
+            </div>
+
+        </motion.div>
     );
 }

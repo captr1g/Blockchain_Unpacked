@@ -94,7 +94,61 @@ export default function Home() {
                         Start Learning <ArrowRight className="ml-2 w-5 h-5" />
                     </Link>
                 </motion.div>
+
+                {/* Tech Stack Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="mt-32 pt-16 border-t border-brand-dark/5"
+                >
+                    <h2 className="text-3xl font-bold text-brand-dark mb-12">The Modern Ethereum Stack</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
+                        <StackCard
+                            category="Languages"
+                            items={['Solidity', 'Vyper', 'Huff']}
+                            color="bg-brand-dark"
+                            textColor="text-brand-beige"
+                        />
+                        <StackCard
+                            category="Frameworks"
+                            items={['Hardhat', 'Foundry', 'Remix']}
+                            color="bg-brand-red"
+                            textColor="text-white"
+                        />
+                        <StackCard
+                            category="Libraries"
+                            items={['Ethers.js', 'Viem', 'Wagmi']}
+                            color="bg-brand-green"
+                            textColor="text-white"
+                        />
+                        <StackCard
+                            category="Frontend"
+                            items={['React', 'Next.js', 'RainbowKit']}
+                            color="bg-brand-beige border border-brand-dark/10"
+                            textColor="text-brand-dark"
+                        />
+                    </div>
+                </motion.div>
             </div>
+        </div>
+    );
+}
+
+function StackCard({ category, items, color, textColor }) {
+    return (
+        <div className={`p-6 rounded-2xl shadow-lg ${color} ${textColor} transform hover:-translate-y-2 transition-transform`}>
+            <h3 className="text-xl font-bold mb-4 border-b border-current pb-2 opacity-80">{category}</h3>
+            <ul className="space-y-2">
+                {items.map(item => (
+                    <li key={item} className="flex items-center font-medium">
+                        <span className="w-2 h-2 rounded-full bg-current mr-2 opacity-50"></span>
+                        {item}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }
