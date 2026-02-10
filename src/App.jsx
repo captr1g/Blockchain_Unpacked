@@ -4,6 +4,7 @@ import Consensus from './components/Consensus';
 import Solidity from './components/Solidity';
 import Deployment from './components/Deployment';
 import Security from './components/Security';
+import Share from './components/Share';
 
 import Layout from './components/Layout';
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/solidity" element={<Solidity />} />
           <Route path="/deployment" element={<Deployment />} />
           <Route path="/security" element={<Security />} />
+          <Route path="/share" element={<Share />} />
         </Routes>
       </Layout>
     </Router>

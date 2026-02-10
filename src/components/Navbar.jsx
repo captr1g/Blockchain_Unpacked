@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Cpu, Code, Globe, AlertTriangle, Menu, X, Wallet } from 'lucide-react';
+import { Home, Cpu, Code, Globe, AlertTriangle, Menu, X, Wallet, Share2 } from 'lucide-react';
 
 export default function Navbar() {
     const location = useLocation();
@@ -14,6 +14,7 @@ export default function Navbar() {
         { to: '/solidity', label: 'Solidity', icon: <Code className="w-4 h-4" /> },
         { to: '/deployment', label: 'Deployment', icon: <Globe className="w-4 h-4" /> },
         { to: '/security', label: 'Security', icon: <AlertTriangle className="w-4 h-4" /> },
+        { to: '/share', label: 'Share', icon: <Share2 className="w-4 h-4" /> },
     ];
 
     const connectWallet = async () => {
@@ -84,8 +85,8 @@ export default function Navbar() {
                         <button
                             onClick={connectWallet}
                             className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-bold transition-all shadow-sm ${account
-                                    ? 'bg-brand-green/10 text-brand-green border border-brand-green/20'
-                                    : 'bg-brand-dark text-white hover:bg-brand-dark/90'
+                                ? 'bg-brand-green/10 text-brand-green border border-brand-green/20'
+                                : 'bg-brand-dark text-white hover:bg-brand-dark/90'
                                 }`}
                         >
                             <Wallet className="w-4 h-4" />
@@ -136,8 +137,8 @@ export default function Navbar() {
                                         setIsMobileMenuOpen(false);
                                     }}
                                     className={`w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-lg text-sm font-bold transition-all ${account
-                                            ? 'bg-brand-green/10 text-brand-green border border-brand-green/20'
-                                            : 'bg-brand-dark text-white'
+                                        ? 'bg-brand-green/10 text-brand-green border border-brand-green/20'
+                                        : 'bg-brand-dark text-white'
                                         }`}
                                 >
                                     <Wallet className="w-4 h-4" />
