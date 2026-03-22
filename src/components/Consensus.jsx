@@ -1,41 +1,75 @@
 import { useState, useEffect } from 'react';
+import Scene3D from './Scene3D';
 import { motion } from 'framer-motion';
 import { Pickaxe, Coins, Server, Shield, Zap, RefreshCw, CheckCircle } from 'lucide-react';
+
+const BG = '#11131d';
+const SURFACE = '#1d1f2a';
+const SURFACE_H = '#282934';
+const AMBER = '#f59e0b';
+const ROSE = '#fb7185';
+const EMERALD = '#4ade80';
+const TEXT = '#f1f5f9';
+const MUTED = '#64748b';
+
+import Quiz from './Quiz';
 
 export default function Consensus() {
     const [activeTab, setActiveTab] = useState('pow');
 
     return (
-        <div className="min-h-screen text-brand-dark p-8">
-            <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl font-bold mb-8 text-center text-brand-red">Consensus Mechanisms</h1>
-
-                <div className="flex justify-center mb-8">
-                    <div className="bg-brand-dark/5 p-1 rounded-full inline-flex space-x-1">
-                        <button
-                            onClick={() => setActiveTab('pow')}
-                            className={`px-6 py-2 rounded-full font-semibold transition-all ${activeTab === 'pow' ? 'bg-brand-red text-white shadow-lg' : 'text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/10'}`}
-                        >
-                            Proof of Work (PoW)
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('pos')}
-                            className={`px-6 py-2 rounded-full font-semibold transition-all ${activeTab === 'pos' ? 'bg-brand-green text-white shadow-lg' : 'text-brand-dark/60 hover:text-brand-dark hover:bg-brand-dark/10'}`}
-                        >
-                            Proof of Stake (PoS)
-                        </button>
-                    </div>
+        <div className="min-h-screen" style={{ color: TEXT }}>
+            {/* Header */}
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-10 gap-6">
+                <div>
+                    <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: AMBER }}>─── PROTOCOL NODES</p>
+                    <h1 className="text-5xl font-black tracking-tighter" style={{ color: TEXT }}>
+                        Consensus<br />
+                        <span className="text-amber-gradient">Mechanisms</span>
+                    </h1>
+                    <p className="mt-3 text-sm max-w-sm" style={{ color: MUTED }}>
+                        The engine of agreement — how thousands of anonymous nodes reach a single truth without a central authority.
+                    </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div className="lg:col-span-2">
-                        {activeTab === 'pow' ? <MiningSimulator /> : <StakingSimulator />}
-                    </div>
-                    <div className="lg:col-span-1">
-                        <ComparisonTable activeTab={activeTab} />
-                    </div>
+                {/* 3D mining rig illustration */}
+                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px]">
+                    <div className="w-full h-full" style={{ cursor: "grab" }}><Scene3D sceneId="consensus" /></div>
                 </div>
             </div>
+
+            {/* Tabs */}
+            <div className="flex space-x-2 mb-8 p-1 inline-flex" style={{ backgroundColor: SURFACE }}>
+                {[
+                    { id: 'pow', label: '⛏ Proof of Work', color: AMBER },
+                    { id: 'pos', label: '🪙 Proof of Stake', color: EMERALD },
+                ].map(tab => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className="px-5 py-2 text-sm font-bold transition-all duration-200"
+                        style={{
+                            backgroundColor: activeTab === tab.id ? tab.color : 'transparent',
+                            color: activeTab === tab.id ? '#11131d' : MUTED,
+                            boxShadow: activeTab === tab.id ? `0 0 16px ${tab.color}44` : 'none',
+                        }}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </div>
+
+            {/* Main grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div className="lg:col-span-2">
+                    {activeTab === 'pow' ? <MiningSimulator /> : <StakingSimulator />}
+                </div>
+                <div className="lg:col-span-1">
+                    <ComparisonTable activeTab={activeTab} />
+                </div>
+            </div>
+
+            <Quiz sectionId="consensus" />
         </div>
     );
 }
@@ -53,10 +87,8 @@ function MiningSimulator() {
             interval = setInterval(() => {
                 const newNonce = Math.floor(Math.random() * 100000);
                 setNonce(newNonce);
-                // Simplified hash simulation
                 const mockHash = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
                 const targetPrefix = '0'.repeat(difficulty);
-
                 if (mockHash.startsWith(targetPrefix)) {
                     setHash(mockHash);
                     setMining(false);
@@ -64,7 +96,7 @@ function MiningSimulator() {
                 } else {
                     setHash(mockHash);
                 }
-            }, 100 - (difficulty * 20)); // Slower as difficulty increases (simulated)
+            }, 100 - (difficulty * 20));
         }
         return () => clearInterval(interval);
     }, [mining, difficulty]);
@@ -73,58 +105,87 @@ function MiningSimulator() {
         <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white p-6 rounded-2xl border border-brand-red/20 shadow-xl"
+            className="p-6"
+            style={{ backgroundColor: SURFACE, borderLeft: `3px solid ${AMBER}` }}
         >
             <div className="flex items-center space-x-3 mb-4">
-                <Pickaxe className="w-8 h-8 text-brand-red" />
-                <h2 className="text-2xl font-bold text-brand-dark">Mining Simulator</h2>
+                <Pickaxe className="w-6 h-6" style={{ color: AMBER }} />
+                <h2 className="text-xl font-bold" style={{ color: TEXT }}>Mining Simulator</h2>
             </div>
-            <p className="text-brand-dark/70 mb-6">
-                Miners compete to solve a computational puzzle. Finding a hash that starts with specific number of zeros requires energy and luck.
+            <p className="text-sm mb-6" style={{ color: MUTED }}>
+                Miners compete to solve a computational puzzle — finding a hash that starts with specific zeros requires energy and luck.
             </p>
 
-            <div className="bg-brand-beige/50 p-6 rounded-xl mb-6 border border-brand-dark/5">
-                <div className="flex justify-between items-center mb-4">
-                    <span className="text-sm font-mono text-brand-dark/60">Target: {'0'.repeat(difficulty)}...</span>
-                    <div className="flex items-center space-x-2 text-brand-dark">
-                        <span className="text-sm font-semibold">Difficulty:</span>
+            {/* Config panel */}
+            <div className="p-4 mb-6" style={{ backgroundColor: BG }}>
+                <div className="flex justify-between items-center mb-3">
+                    <span className="text-xs font-bold tracking-widest uppercase" style={{ color: MUTED }}>Network Difficulty</span>
+                    <div className="flex items-center space-x-3">
                         <input
-                            type="range"
-                            min="1"
-                            max="4"
-                            value={difficulty}
-                            onChange={(e) => setDifficulty(parseInt(e.target.value))}
-                            className="w-24 accent-brand-red"
+                            type="range" min="1" max="4" value={difficulty}
+                            onChange={e => setDifficulty(parseInt(e.target.value))}
+                            className="w-24"
+                            style={{ accentColor: AMBER }}
                         />
+                        <span className="text-xs font-bold" style={{ color: AMBER }}>{difficulty}x</span>
                     </div>
                 </div>
-
-                <div className="font-mono bg-brand-dark p-4 rounded-lg mb-4 text-brand-beige overflow-hidden">
-                    <div>Nonce: {nonce}</div>
-                    <div className="break-all">Hash: {hash || 'Waiting to mine...'}</div>
+                <div className="p-3 font-terminal text-xs" style={{ backgroundColor: '#0c0e17' }}>
+                    <div style={{ color: MUTED }}>Target Hash Prefix</div>
+                    <div className="font-bold mb-2" style={{ color: AMBER }}>{'0'.repeat(difficulty)}{'f'.repeat(8 - difficulty)}...</div>
+                    <div style={{ color: MUTED }}>Nonce: <span style={{ color: TEXT }}>{nonce}</span></div>
+                    <div className="break-all" style={{ color: mining ? ROSE : EMERALD }}>
+                        Hash: {hash || 'Waiting to mine...'}
+                    </div>
                 </div>
-
-                <button
-                    onClick={() => setMining(!mining)}
-                    className={`w-full py-3 rounded-lg font-bold flex items-center justify-center space-x-2 transition-all ${mining ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg' : 'bg-brand-dark text-white hover:bg-black shadow-lg'}`}
-                >
-                    {mining ? <><RefreshCw className="animate-spin" /> <span>Stop Mining</span></> : <><Pickaxe /> <span>Start Mining</span></>}
-                </button>
             </div>
 
-            <div className="space-y-2">
-                <h3 className="font-semibold text-brand-dark">Blockchain</h3>
-                <div className="flex space-x-2 overflow-x-auto pb-4 scrollbar-hide">
-                    {blocks.length === 0 && <span className="text-brand-dark/40 italic">No blocks mined yet.</span>}
-                    {blocks.map((block) => (
+            {/* Buttons */}
+            <div className="flex space-x-3 mb-6">
+                <button
+                    onClick={() => setMining(!mining)}
+                    className="flex-1 clip-button py-3 flex items-center justify-center space-x-2 font-bold text-sm transition-all"
+                    style={{
+                        backgroundColor: mining ? ROSE : AMBER,
+                        color: '#11131d',
+                        boxShadow: mining ? `0 0 20px ${ROSE}44` : `0 0 20px ${AMBER}44`,
+                    }}
+                >
+                    {mining ? <><RefreshCw className="w-4 h-4 animate-spin" /><span>Stop Mining</span></> : <><Pickaxe className="w-4 h-4" /><span>Start Mining</span></>}
+                </button>
+                {blocks.length > 0 && (
+                    <button
+                        onClick={() => setBlocks([])}
+                        className="px-4 py-3 text-sm font-medium transition-all"
+                        style={{ color: MUTED, border: '1px solid rgba(83,68,52,0.4)' }}
+                        onMouseEnter={e => e.currentTarget.style.color = TEXT}
+                        onMouseLeave={e => e.currentTarget.style.color = MUTED}
+                    >
+                        Reset
+                    </button>
+                )}
+            </div>
+
+            {/* Block chain display */}
+            <div>
+                <h3 className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: MUTED }}>Blockchain</h3>
+                <div className="flex space-x-2 overflow-x-auto pb-3 scrollbar-hide">
+                    {blocks.length === 0 && (
+                        <span className="text-xs italic" style={{ color: MUTED }}>No blocks mined yet.</span>
+                    )}
+                    {blocks.map((block, i) => (
                         <motion.div
                             key={block.id}
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            className="flex-shrink-0 w-24 h-24 bg-brand-red/10 border border-brand-red/30 rounded-lg flex flex-col items-center justify-center p-2 text-xs shadow-sm"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="flex-shrink-0 flex flex-col items-center justify-center p-3 text-xs text-center relative"
+                            style={{ width: 90, backgroundColor: BG, border: `1px solid ${AMBER}44` }}
                         >
-                            <span className="font-bold text-brand-red">Block #{block.id}</span>
-                            <span className="text-brand-dark/60 truncate w-full text-center">{block.hash.substring(0, 8)}...</span>
+                            {i > 0 && (
+                                <div className="absolute -left-2 top-1/2 -translate-y-1/2 text-amber-500 chain-pulse">→</div>
+                            )}
+                            <span className="font-bold mb-1" style={{ color: AMBER }}>#{block.id}</span>
+                            <span style={{ color: MUTED }}>{block.hash.substring(0, 8)}...</span>
                         </motion.div>
                     ))}
                 </div>
@@ -134,11 +195,12 @@ function MiningSimulator() {
 }
 
 function StakingSimulator() {
-    const [validators, setValidators] = useState([
-        { id: 1, stake: 32, blocks: 0 },
-        { id: 2, stake: 16, blocks: 0 },
-        { id: 3, stake: 100, blocks: 0 },
+    const [validators] = useState([
+        { id: 1, stake: 32, blocks: 0, color: AMBER },
+        { id: 2, stake: 16, blocks: 0, color: ROSE },
+        { id: 3, stake: 100, blocks: 0, color: EMERALD },
     ]);
+    const [validatorsState, setValidatorsState] = useState(validators);
     const [activeValidator, setActiveValidator] = useState(null);
     const [blocks, setBlocks] = useState([]);
     const [isValidating, setIsValidating] = useState(false);
@@ -147,128 +209,137 @@ function StakingSimulator() {
         let interval;
         if (isValidating) {
             interval = setInterval(() => {
-                // Weighted random selection based on stake
-                const totalStake = validators.reduce((acc, v) => acc + v.stake, 0);
+                const totalStake = validatorsState.reduce((acc, v) => acc + v.stake, 0);
                 let random = Math.random() * totalStake;
                 let selected = null;
-                for (const v of validators) {
+                for (const v of validatorsState) {
                     random -= v.stake;
-                    if (random <= 0) {
-                        selected = v;
-                        break;
-                    }
+                    if (random <= 0) { selected = v; break; }
                 }
-
                 setActiveValidator(selected);
-
-                setTimeout(() => { // Simulate validation time
+                setTimeout(() => {
                     if (selected) {
-                        setValidators(prev => prev.map(v => v.id === selected.id ? { ...v, blocks: v.blocks + 1 } : v));
-                        setBlocks(prev => [...prev, { id: prev.length + 1, validator: selected.id }]);
+                        setValidatorsState(prev => prev.map(v => v.id === selected.id ? { ...v, blocks: v.blocks + 1 } : v));
+                        setBlocks(prev => [...prev, { id: prev.length + 1, validator: selected.id, color: selected.color }]);
                         setActiveValidator(null);
                     }
                 }, 1000);
-
             }, 2000);
         }
         return () => clearInterval(interval);
-    }, [isValidating, validators]);
-
+    }, [isValidating, validatorsState]);
 
     return (
         <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="bg-white p-6 rounded-2xl border border-brand-green/20 shadow-xl"
+            className="p-6"
+            style={{ backgroundColor: SURFACE, borderLeft: `3px solid ${EMERALD}` }}
         >
             <div className="flex items-center space-x-3 mb-4">
-                <Coins className="w-8 h-8 text-brand-green" />
-                <h2 className="text-2xl font-bold text-brand-dark">Staking Simulator</h2>
+                <Coins className="w-6 h-6" style={{ color: EMERALD }} />
+                <h2 className="text-xl font-bold" style={{ color: TEXT }}>Staking Simulator</h2>
             </div>
-            <p className="text-brand-dark/70 mb-6">
-                Validators lock up native tokens as collateral. The more you stake, the higher usage probability to be chosen to propose the next block.
+            <p className="text-sm mb-6" style={{ color: MUTED }}>
+                Validators lock tokens as collateral. Higher stake = higher probability of proposing the next block.
             </p>
 
-            <div className="grid grid-cols-3 gap-4 mb-6">
-                {validators.map((v) => (
+            <div className="grid grid-cols-3 gap-3 mb-6">
+                {validatorsState.map(v => (
                     <motion.div
                         key={v.id}
                         animate={{
-                            borderColor: activeValidator?.id === v.id ? '#A7BEAE' : 'transparent',
-                            scale: activeValidator?.id === v.id ? 1.05 : 1,
-                            backgroundColor: activeValidator?.id === v.id ? '#fcfdfa' : '#ffffff'
+                            borderColor: activeValidator?.id === v.id ? v.color : 'rgba(83,68,52,0.3)',
+                            backgroundColor: activeValidator?.id === v.id ? `${v.color}18` : SURFACE_H,
                         }}
-                        className="bg-white p-4 rounded-xl border-2 shadow-sm flex flex-col items-center transition-colors"
+                        className="p-4 flex flex-col items-center text-center"
+                        style={{ border: '1px solid rgba(83,68,52,0.3)' }}
                     >
-                        <div className="w-12 h-12 rounded-full bg-brand-green/20 flex items-center justify-center mb-2">
-                            <Server className={`w-6 h-6 ${activeValidator?.id === v.id ? 'text-brand-green animate-pulse' : 'text-brand-dark/40'}`} />
+                        <div className="w-10 h-10 flex items-center justify-center mb-2 rounded-full" style={{ backgroundColor: `${v.color}18` }}>
+                            <Server className="w-5 h-5" style={{ color: activeValidator?.id === v.id ? v.color : MUTED }} />
                         </div>
-                        <div className="font-bold text-lg text-brand-dark">{v.stake} ETH</div>
-                        <div className="text-xs text-brand-dark/50">Validator #{v.id}</div>
-                        <div className="mt-2 text-xs bg-brand-green/20 text-brand-dark/80 px-2 py-1 rounded-full">Blocks: {v.blocks}</div>
+                        <div className="font-bold text-base" style={{ color: v.color }}>{v.stake} ETH</div>
+                        <div className="text-xs mb-2" style={{ color: MUTED }}>Validator #{v.id}</div>
+                        <div className="text-xs px-2 py-0.5 font-bold" style={{ backgroundColor: `${v.color}18`, color: v.color }}>
+                            {v.blocks} blocks
+                        </div>
                     </motion.div>
                 ))}
             </div>
 
             <button
                 onClick={() => setIsValidating(!isValidating)}
-                className={`w-full py-3 rounded-lg font-bold flex items-center justify-center space-x-2 mb-6 transition-all ${isValidating ? 'bg-brand-red hover:bg-red-700 text-white shadow-lg' : 'bg-brand-green hover:bg-green-700 text-white shadow-lg'}`}
+                className="w-full clip-button py-3 font-bold text-sm mb-6 transition-all"
+                style={{
+                    backgroundColor: isValidating ? ROSE : EMERALD,
+                    color: '#11131d',
+                    boxShadow: isValidating ? `0 0 20px ${ROSE}44` : `0 0 20px ${EMERALD}44`,
+                }}
             >
-                {isValidating ? <span>Stop Validating</span> : <span>Start Network</span>}
+                {isValidating ? 'Stop Validating' : '▶ Start Network'}
             </button>
 
-            <div className="space-y-2">
-                <h3 className="font-semibold text-brand-dark">Blockchain</h3>
-                <div className="flex space-x-2 overflow-x-auto pb-4 scrollbar-hide">
-                    {blocks.length === 0 && <span className="text-brand-dark/40 italic">No blocks validated yet.</span>}
-                    {blocks.map((block) => (
+            <div>
+                <h3 className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: MUTED }}>Blockchain</h3>
+                <div className="flex space-x-2 overflow-x-auto pb-3 scrollbar-hide">
+                    {blocks.length === 0 && <span className="text-xs italic" style={{ color: MUTED }}>No blocks validated yet.</span>}
+                    {blocks.map((block, i) => (
                         <motion.div
                             key={block.id}
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            className="flex-shrink-0 w-24 h-24 bg-brand-green/10 border border-brand-green/30 rounded-lg flex flex-col items-center justify-center p-2 text-xs shadow-sm"
+                            className="flex-shrink-0 flex flex-col items-center justify-center p-3 relative"
+                            style={{ width: 90, backgroundColor: BG, border: `1px solid ${block.color}44` }}
                         >
-                            <span className="font-bold text-brand-green">Block #{block.id}</span>
-                            <span className="text-brand-dark/60">Val #{block.validator}</span>
-                            <CheckCircle className="w-4 h-4 text-brand-green mt-1" />
+                            {i > 0 && <div className="absolute -left-2 top-1/2 -translate-y-1/2" style={{ color: MUTED }}>→</div>}
+                            <span className="font-bold text-xs mb-1" style={{ color: block.color }}>#{block.id}</span>
+                            <CheckCircle className="w-4 h-4" style={{ color: block.color }} />
+                            <span className="text-xs" style={{ color: MUTED }}>V#{block.validator}</span>
                         </motion.div>
                     ))}
                 </div>
             </div>
-
         </motion.div>
     );
 }
 
 function ComparisonTable({ activeTab }) {
     const data = [
-        { feature: 'Energy Efficiency', pow: 'Low (High Consumption)', pos: 'High (Eco-friendly)', icon: <Zap /> },
-        { feature: 'Security Model', pow: 'Computational Cost', pos: 'Economic Stake', icon: <Shield /> },
-        { feature: 'Centralization Risk', pow: 'Mining Pools', pos: 'Wealth Concentration', icon: <Server /> },
+        { feature: 'Energy Efficiency', pow: { label: 'Extreme High', val: '🔴' }, pos: { label: 'Ultra Low', val: '🟢' }, icon: <Zap className="w-4 h-4" /> },
+        { feature: 'Security Model', pow: { label: 'Computation', val: '⚡' }, pos: { label: 'Incentives', val: '🏦' }, icon: <Shield className="w-4 h-4" /> },
+        { feature: 'Centralization Risk', pow: { label: 'Mining Pools', val: '⛏' }, pos: { label: 'Wealth Conc.', val: '💰' }, icon: <Server className="w-4 h-4" /> },
     ];
 
     return (
-        <div className="bg-white rounded-2xl p-6 h-full border border-brand-dark/5 shadow-xl">
-            <h3 className="text-xl font-bold mb-6 text-brand-dark">Comparison</h3>
-            <div className="space-y-6">
-                {data.map((item, index) => (
-                    <div key={index} className="bg-brand-beige/30 p-4 rounded-xl border border-brand-dark/5">
-                        <div className="flex items-center space-x-2 mb-2 text-brand-dark">
+        <div className="p-6 h-full" style={{ backgroundColor: SURFACE, borderLeft: `3px solid #534434` }}>
+            <h3 className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: MUTED }}>PoW vs PoS Matrix</h3>
+            <div className="space-y-4">
+                {data.map((item, i) => (
+                    <div key={i} className="p-4" style={{ backgroundColor: BG }}>
+                        <div className="flex items-center space-x-2 mb-3" style={{ color: AMBER }}>
                             {item.icon}
-                            <span className="font-semibold">{item.feature}</span>
+                            <span className="text-xs font-bold tracking-wider uppercase">{item.feature}</span>
                         </div>
-                        <div className="grid grid-cols-2 gap-2 text-sm">
-                            <div className={`${activeTab === 'pow' ? 'text-brand-red font-bold' : 'text-brand-dark/40'}`}>
-                                <span className="block text-xs uppercase tracking-wider text-brand-dark/60 font-normal">PoW</span>
-                                {item.pow}
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div className={`p-2 text-center ${activeTab === 'pow' ? 'ring-1' : ''}`}
+                                style={{ backgroundColor: SURFACE_H, color: activeTab === 'pow' ? AMBER : MUTED, ringColor: AMBER }}>
+                                <div className="text-xs uppercase tracking-widest mb-1" style={{ color: MUTED }}>PoW</div>
+                                <div className="font-bold">{item.pow.label}</div>
                             </div>
-                            <div className={`${activeTab === 'pos' ? 'text-brand-green font-bold' : 'text-brand-dark/40'}`}>
-                                <span className="block text-xs uppercase tracking-wider text-brand-dark/60 font-normal">PoS</span>
-                                {item.pos}
+                            <div className={`p-2 text-center ${activeTab === 'pos' ? 'ring-1' : ''}`}
+                                style={{ backgroundColor: SURFACE_H, color: activeTab === 'pos' ? EMERALD : MUTED }}>
+                                <div className="text-xs uppercase tracking-widest mb-1" style={{ color: MUTED }}>PoS</div>
+                                <div className="font-bold">{item.pos.label}</div>
                             </div>
                         </div>
                     </div>
                 ))}
+            </div>
+
+            <div className="mt-6 p-4 text-xs" style={{ backgroundColor: BG, borderLeft: `2px solid ${AMBER}` }}>
+                <p style={{ color: MUTED }}>
+                    "{activeTab === 'pow' ? 'Proof of Work secures the Bitcoin network via thermodynamic cost.' : 'Proof of Stake relies on economic weight — skin in the game.'}"
+                </p>
             </div>
         </div>
     );

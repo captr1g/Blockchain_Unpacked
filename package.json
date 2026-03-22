@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@react-three/postprocessing": "^3.0.4",
     "@tailwindcss/postcss": "^4.1.18",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.563.0",
@@ -17,6 +20,7 @@
     "react-dom": "^19.2.0",
     "react-qr-code": "^2.0.18",
     "react-router-dom": "^7.13.0",
+    "three": "^0.183.2",
     "viem": "^2.45.2"
   },
   "devDependencies": {

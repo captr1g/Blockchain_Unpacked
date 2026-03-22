@@ -1,18 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-brand-red: #B85042;
-  --color-brand-beige: #E7E8D1;
-  --color-brand-green: #A7BEAE;
-  --color-brand-dark: #2d3748;
+  /* Aether Protocol — primary palette */
+  --color-aether-bg:           #11131d;
+  --color-aether-surface:      #191b25;
+  --color-aether-card:         #1d1f2a;
+  --color-aether-card-high:    #282934;
+  --color-aether-card-highest: #32343f;
+  --color-aether-border:       #534434;
+
+  /* Accents */
+  --color-amber:               #f59e0b;
+  --color-amber-light:         #ffc174;
+  --color-amber-dim:           #ffb95f;
+  --color-rose:                #fb7185;
+  --color-emerald:             #4ade80;
+  --color-sky:                 #38bdf8;
+
+  /* Text */
+  --color-text-primary:        #f1f5f9;
+  --color-text-muted:          #94a3b8;
+  --color-text-faint:          #64748b;
+
+  /* Legacy aliases (keep for gradual migration) */
+  --color-brand-red:           #f59e0b;
+  --color-brand-beige:         #1d1f2a;
+  --color-brand-green:         #4ade80;
+  --color-brand-dark:          #f1f5f9;
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color-scheme: light;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  color-scheme: dark;
 }
 
+/* ─── Base ─────────────────────────────────────── */
 body {
-  background-color: var(--color-brand-beige);
-  color: var(--color-brand-dark);
+  background-color: var(--color-aether-bg);
+  color: var(--color-text-primary);
+}
+
+/* ─── Scrollbar ─────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-aether-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-aether-card-highest); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-amber); }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ─── Utilities ─────────────────────────────────── */
+.clip-button {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.amber-glow {
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+}
+.amber-glow-sm {
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+}
+.rose-glow {
+  box-shadow: 0 0 20px rgba(251, 113, 133, 0.25);
+}
+.emerald-glow {
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.25);
+}
+.sky-glow {
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.25);
+}
+
+/* ─── Glass surface ─────────────────────────────── */
+.glass {
+  background: rgba(29, 31, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ─── Amber gradient text ───────────────────────── */
+.text-amber-gradient {
+  background: linear-gradient(135deg, #ffc174 0%, #f59e0b 60%, #fb7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Monospace terminal ────────────────────────── */
+.font-terminal {
+  font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+}
+
+/* ─── Ambient orb animation ─────────────────────── */
+@keyframes orb-drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(30px, -20px) scale(1.05); }
+  66%  { transform: translate(-20px, 10px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+.orb-animate { animation: orb-drift 12s ease-in-out infinite; }
+.orb-animate-slow { animation: orb-drift 18s ease-in-out infinite reverse; }
+
+/* ─── Block chain link animation ────────────────── */
+@keyframes chain-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+.chain-pulse { animation: chain-pulse 2s ease-in-out infinite; }
+
+/* ─── Blinking cursor ───────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* ─── Pulsing dot ───────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--color-rose);
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+/* ─── 3D Scene — Seamless edge feathering ─── */
+.scene3d-blend {
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at center, #000 40%, transparent 100%);
 }
