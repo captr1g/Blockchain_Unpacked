@@ -137,65 +137,6 @@ export default function Home() {
             </section>
 
             {/* ── User Progress ───────────────────────────────── */}
-            <section className="py-16">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="mb-10"
-                >
-                    <p className="text-xs font-bold tracking-widest uppercase mb-2" style={{ color: EMERALD }}>─── YOUR JOURNEY</p>
-                    <h2 className="text-3xl font-bold" style={{ color: TEXT }}>Current Progress</h2>
-                </motion.div>
-
-                {/* Progress Bar */}
-                <div className="mb-12 p-6" style={{ backgroundColor: SURFACE, borderLeft: '3px solid ' + EMERALD }}>
-                    <div className="flex justify-between items-center mb-4">
-                        <h3 className="font-bold text-lg" style={{ color: TEXT }}>Blockchain Architect Certification</h3>
-                        <span className="font-terminal font-bold" style={{ color: EMERALD }}>35% Complete</span>
-                    </div>
-                    <div className="w-full h-2 bg-[#11131d] overflow-hidden">
-                        <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: '35%' }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, ease: 'easeOut' }}
-                            className="h-full"
-                            style={{ backgroundColor: EMERALD }}
-                        />
-                    </div>
-                </div>
-
-                {/* Badge Grid */}
-                <div>
-                    <h3 className="font-bold text-sm uppercase tracking-widest mb-6" style={{ color: MUTED }}>Earned Badges</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        {[
-                            { title: 'Genesis Block', icon: <Medal className="w-8 h-8" />, color: AMBER, earned: true },
-                            { title: 'Smart Contract Virtuoso', icon: <Code className="w-8 h-8" />, color: ROSE, earned: true },
-                            { title: 'DeFi Degen', icon: <Star className="w-8 h-8" />, color: EMERALD, earned: false },
-                            { title: 'Token Master', icon: <Trophy className="w-8 h-8" />, color: PURPLE, earned: false },
-                        ].map(badge => (
-                            <div key={badge.title} className="p-6 flex flex-col items-center justify-center text-center transition-all opacity-100"
-                                style={{
-                                    backgroundColor: badge.earned ? badge.color + '15' : SURFACE,
-                                    border: '1px solid ' + (badge.earned ? badge.color : 'rgba(83,68,52,0.3)'),
-                                    opacity: badge.earned ? 1 : 0.5,
-                                    filter: badge.earned ? 'none' : 'grayscale(100%)'
-                                }}>
-                                <div className="mb-3" style={{ color: badge.earned ? badge.color : MUTED }}>
-                                    {badge.icon}
-                                </div>
-                                <span className="text-xs font-bold tracking-wider uppercase" style={{ color: badge.earned ? TEXT : MUTED }}>
-                                    {badge.title}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* ── Feature Cards ─────────────────────────────── */}
             <section className="py-16">
                 <motion.div
