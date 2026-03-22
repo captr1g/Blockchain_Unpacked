@@ -17,7 +17,8 @@ const footerLinks = {
     ],
     resources: [
         { label: 'Share', to: '/share' },
-        { label: 'GitHub', href: 'https://github.com' },
+        { label: 'GitHub', href: 'https://github.com/captr1g' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yash-raj-saxena/' },
         { label: 'Ethereum Docs', href: 'https://ethereum.org' },
     ],
 };
