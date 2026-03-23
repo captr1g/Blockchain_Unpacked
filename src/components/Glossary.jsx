@@ -88,7 +88,7 @@ export default function Glossary() {
                 </div>
 
                 {/* Isometric SVG Illustration */}
-                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px]">
+                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px] xl:h-[600px]">
                     <div className="w-full h-full" style={{ cursor: "grab" }}><Scene3D sceneId="glossary" /></div>
                 </div>
             </div>

@@ -52,8 +52,8 @@ export default function DeFi() {
                     </p>
                 </div>
 
-                {/* Isometric SVG Illustration */}
-                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px]">
+                {/* 3D abstract fluid/pool illustration */}
+                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px] xl:h-[600px]">
                     <div className="w-full h-full" style={{ cursor: "grab" }}><Scene3D sceneId="defi" /></div>
                 </div>
             </div>
@@ -131,7 +131,7 @@ function AMMSimulator({ amm }) {
     const maxSlider = swapDirection === 'AtoB' ? Math.floor(amm.poolA * 0.4) : Math.floor(amm.poolB * 0.4);
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-12">
             {/* POOL STATE */}
             <div className="p-6 md:p-8" style={{ backgroundColor: SURFACE, borderLeft: `3px solid ${EMERALD}` }}>
                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2" style={{ color: TEXT }}>
@@ -349,8 +349,8 @@ function ILCalculator({ multiplier, setMultiplier, result }) {
                 </div>
             </div>
 
-            {/* BARS */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+            {/* Main layout grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-12 mb-10">
                 {/* HELD */}
                 <div className="space-y-2">
                     <h4 className="text-sm font-bold uppercase tracking-wider" style={{ color: MUTED }}>If You HELD</h4>
@@ -568,7 +568,7 @@ function LendingSimulator({ lending }) {
 
 function GlossaryGrid() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-10">
             {DEFI_GLOSSARY.map((item, idx) => (
                 <div key={idx} className="group perspective-1000 aspect-[1.2]">
                     <motion.div

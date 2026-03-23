@@ -70,8 +70,8 @@ export default function TokenStandards() {
                     </p>
                 </div>
 
-                {/* Isometric SVG Illustration */}
-                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px]">
+                {/* 3D abstract tokens illustration */}
+                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px] xl:h-[600px]">
                     <div className="w-full h-full" style={{ cursor: "grab" }}><Scene3D sceneId="tokens" /></div>
                 </div>
             </div>
@@ -180,8 +180,8 @@ export default function TokenStandards() {
                                                             {fn.signature}
                                                         </span>
                                                     </div>
-
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                                    {/* State Variables Grid */}
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-10 mb-6">
                                                         <div>
                                                             <strong className="block text-xs uppercase tracking-widest mb-2" style={{ color: MUTED }}>Description</strong>
                                                             <p className="leading-relaxed" style={{ color: TEXT }}>{fn.description}</p>

@@ -52,8 +52,8 @@ export default function Security() {
                     </p>
                 </div>
 
-                {/* 3D hacked vault */}
-                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px]">
+                {/* 3D padlock/shield illustration */}
+                <div className="hidden lg:flex items-center justify-center relative w-full h-[400px] lg:h-[500px] xl:h-[600px]">
                     <div className="w-full h-full" style={{ cursor: "grab" }}><Scene3D sceneId="security" /></div>
                 </div>
             </div>
@@ -241,8 +241,8 @@ function ReentrancyDemo() {
                 </div>
             </div>
 
-            {/* Explanation panels */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Introduction and Score */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 xl:gap-12 mb-6">
                 <div className="p-5" style={{ backgroundColor: SURFACE }}>
                     <div className="flex items-center space-x-2 mb-3">
                         <AlertTriangle className="w-4 h-4" style={{ color: AMBER }} />

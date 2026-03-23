@@ -77,7 +77,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop nav */}
-                    <div className="hidden md:flex items-center space-x-1">
+                    <div className="hidden lg:flex items-center space-x-1">
                         {links.map((link) => {
                             const isActive = location.pathname === link.to;
                             return (
@@ -108,7 +108,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Desktop wallet button */}
-                    <div className="hidden md:flex">
+                    <div className="hidden lg:flex">
                         <button
                             id="connect-wallet-btn"
                             onClick={connectWallet}
@@ -132,7 +132,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Mobile menu toggle */}
-                    <div className="md:hidden flex items-center space-x-3">
+                    <div className="lg:hidden flex items-center space-x-3">
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             className="p-2 transition-colors"
@@ -151,7 +151,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden overflow-hidden"
+                        className="lg:hidden overflow-hidden"
                         style={{ backgroundColor: 'rgba(17,19,29,0.97)', borderTop: '1px solid rgba(83,68,52,0.3)' }}
                     >
                         <div className="px-4 pt-3 pb-4 space-y-1">

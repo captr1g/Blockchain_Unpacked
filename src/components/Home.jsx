@@ -57,7 +57,7 @@ export default function Home() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.7, delay: 0.1 }}
-                            className="text-6xl lg:text-7xl font-black leading-none tracking-tighter mb-6"
+                            className="text-6xl lg:text-7xl xl:text-8xl font-black leading-none tracking-tighter mb-6"
                         >
                             <span className="text-amber-gradient">Blockchain</span>
                             <br />
@@ -129,7 +129,7 @@ export default function Home() {
                         transition={{ delay: 0.3, duration: 0.8 }}
                         className="hidden lg:flex items-center justify-center"
                     >
-                        <div className="relative w-full h-[400px] lg:h-[600px]">
+                        <div className="relative w-full h-[400px] lg:h-[600px] xl:h-[700px]">
                             <div className="w-full h-full relative z-10" style={{ cursor: "grab" }}><Scene3D sceneId="home" /></div>
                         </div>
                     </motion.div>
@@ -151,7 +151,7 @@ export default function Home() {
                     <p className="mt-2 text-sm" style={{ color: MUTED }}>Interactive simulations bridging theory and on-chain practice.</p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                     {CARDS.map((card, i) => (
                         <motion.div
                             key={card.to}

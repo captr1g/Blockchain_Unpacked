@@ -42,7 +42,7 @@ export default function Layout({ children }) {
 
             <Navbar />
 
-            <main className="pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto min-h-[calc(100vh-80px)] relative z-10">
+            <main className="pt-20 pb-12 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-24 max-w-7xl mx-auto min-h-[calc(100vh-80px)] relative z-10">
                 <AnimatePresence mode="wait">
                     <motion.div
                         key={location.pathname}
@@ -58,9 +58,9 @@ export default function Layout({ children }) {
 
             {/* ── Footer ── */}
             <footer className="relative z-10" style={{ backgroundColor: '#11131d' }}>
-
-                {/* Bordered grid container — outer border wraps rows 1+2 only */}
-                <div className="mx-4 sm:mx-8 lg:mx-12" style={{ border: '1px solid #1e2030' }}>
+                <div className="px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-24 max-w-7xl mx-auto">
+                    {/* Bordered grid container — outer border wraps rows 1+2 only */}
+                    <div className="w-full" style={{ border: '1px solid #1e2030' }}>
 
                     {/* Row 1 — Links: 2-col mobile, 4-col desktop */}
                     <div className="grid grid-cols-2 lg:grid-cols-4">
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
                     </div>
 
                     {/* Row 2 — Copyright + geometric art */}
-                    <div className="grid grid-cols-2 lg:grid-cols-[280px_1fr]">
+                    <div className="grid grid-cols-2 lg:grid-cols-[280px_1fr] xl:grid-cols-[320px_1fr]">
                         {/* Left cell — copyright top-left, arrow art */}
                         <div className="relative px-6 sm:px-8 pt-8 min-h-[240px] sm:min-h-[280px] overflow-hidden" style={{ borderRight: '1px solid #1e2030' }}>
                             <p className="text-sm relative z-10" style={{ color: '#64748b' }}>
@@ -116,7 +116,7 @@ export default function Layout({ children }) {
                             <span
                                 className="absolute bottom-[-0.15em] right-4 font-bold select-none pointer-events-none hidden lg:block"
                                 style={{
-                                    fontSize: 'clamp(120px, 14vw, 220px)',
+                                    fontSize: 'clamp(100px, 10vw, 150px)',
                                     color: '#f1f5f9',
                                     letterSpacing: '-0.04em',
                                     lineHeight: 0.85,
@@ -132,19 +132,21 @@ export default function Layout({ children }) {
                 </div>
 
                 {/* Giant brand text — mobile only, outside bordered grid */}
-                <div className="relative overflow-hidden px-4 py-6 lg:hidden">
+                <div className="relative overflow-hidden pt-6 pb-12 lg:hidden">
                     <span
-                        className="font-bold select-none pointer-events-none block"
+                        className="font-bold select-none pointer-events-none block text-center"
                         style={{
                             fontSize: 'clamp(64px, 18vw, 160px)',
                             color: '#f1f5f9',
                             letterSpacing: '-0.04em',
                             lineHeight: 0.85,
+                            whiteSpace: 'nowrap',
                         }}
                     >
                         Block<span style={{ color: '#f59e0b' }}>chain</span>
                     </span>
-                    <span className="absolute bottom-3 right-4 text-xl" style={{ color: '#64748b' }}>®</span>
+                    <span className="absolute top-6 right-4 text-sm" style={{ color: '#64748b' }}>®</span>
+                </div>
                 </div>
             </footer>
         </div>

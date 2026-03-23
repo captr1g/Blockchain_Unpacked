@@ -178,7 +178,7 @@ export default function Layer2() {
                 </div>
 
                 <div className="p-6 md:p-10" style={{ backgroundColor: SURFACE }}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-12 relative">
                         
                         {/* Desktop Connecting Line */}
                         <div className="hidden lg:block absolute top-[50%] left-0 right-0 h-0.5" style={{ backgroundColor: 'rgba(83,68,52,0.2)', zIndex: 0 }} />
@@ -227,7 +227,7 @@ export default function Layer2() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6"
+                        className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-12"
                     >
                         <div className="p-6 border-l-2" style={{ backgroundColor: BG, borderColor: EMERALD }}>
                             <h4 className="text-sm font-bold uppercase tracking-widest mb-4 flex items-center gap-2" style={{ color: EMERALD }}>
@@ -264,7 +264,7 @@ export default function Layer2() {
                     Bridging Assets
                 </h2>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-8">
                     {BRIDGE_STEPS.map((step, i) => (
                         <div key={i} className="p-6 border flex flex-col items-center text-center relative" style={{ backgroundColor: SURFACE, borderColor: 'rgba(83,68,52,0.3)' }}>
                             <div className="w-10 h-10 mb-4 rounded-full border-2 flex items-center justify-center font-bold" style={{ borderColor: SKY, color: SKY }}>
